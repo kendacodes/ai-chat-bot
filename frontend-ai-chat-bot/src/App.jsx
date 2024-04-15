@@ -1,7 +1,11 @@
+import { useState } from "react";
 import Button from "./components/Button";
 import Display from "./components/Display";
 import Answer from "./components/Answer";
-import { useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+// import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import CopyAllIcon from '@mui/icons-material/CopyAll';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 const App = (props) => {
 
@@ -10,47 +14,43 @@ const App = (props) => {
   const [response, setResponse] = useState([]);
   const [suggestedQuestion, setSuggestedQuestion] = useState("");
   const [history, setHistory] = useState([]);
-
   const [showSuggested, setShowSuggested] = useState(true)
+  // const [thumbDownClicked, setThumbDownClicked] = useState(false);
+
+  const variousBotResponses = [
+    'I dont understand',
+    'Let"s talk about that ',
+    'Tell me more',
+    'That is out of my scope',
+    'That"s above me',
+    'I"m just a bot', 
+    'I got you in my next iteration'
+  ]
 
   const handleUserInput = (event) => {
     setUserInput(event.target.value);
   };
 
+  // On a form submit, we select a random response from the variousBotResponses array 
+  // Use a newResponse object with the user's input and a randomly selected bot reply, update the response state array with this new response, and clear the userInput state.
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const newSearch = {
-      question: userInput,
-      userId: search.length + 1 + "X",
-      botReply: '',
-      botId: '',
-    };
-    setSearch(search.concat(newSearch));
-    setUserInput("");
-    setShowSuggested(false)
-    botResponse();
-  };
-  const botResponse = () => {
+    if (userInput < 1) {
+      alert("Input required");
+      return;
+    }
     setTimeout(() => {
       const newResponse = {
         question: userInput,
-        userId: search.length + 1 + "X",
-        botReply: "I'm just a bot.",
-        botId: search.length + 1 + "XY",
+        botReply:
+          variousBotResponses[
+          Math.floor(Math.random() * variousBotResponses.length)
+          ]
       };
+      setResponse([...response, newResponse]);
+      setUserInput("");
       setResponse(response.concat(newResponse));
     }, 3000);
-  };
-
-  const handleButtonInput = () => {
-    // event.preventDefault();
-    const newSearch = {
-      question: suggestedQuestion,
-      id: search.length + 1 + "XY",
-    };
-    setSearch(search.concat(newSearch));
-    setUserInput("");
-    botResponse();
   };
 
   // Handling responses for suggested questions button that are on site at page load
@@ -70,9 +70,9 @@ const App = (props) => {
     })
     const buttonText = event.target.textContent;
     setSuggestedQuestion(buttonText);
-    // handleButtonInput();
     setShowSuggested(false)
   };
+
   const handleNewSearch = () => {
     setHistory(history.concat(response));
     setShowSuggested(true)
@@ -81,12 +81,29 @@ const App = (props) => {
     setResponse([]);
     setSuggestedQuestion("");
   };
+ 
+//   const handleThumbDownClick = () => {
+//    setThumbDownClicked(true);
+//  };
+  const handleCopyAllClick = (response) => {
+   // Copy the provided response from variousBotResponses array
+   navigator.clipboard.writeText(response);
+   alert(response + ' has been copied to clipboard');
+  }; 
+  const handleReplayClick = () => {
+   const newResponse = generateRandomResponse(variousBotResponses);
+   setResponse(prevResponse => [...prevResponse, newResponse]);
+  };
+  const generateRandomResponse = (responses) => {
+  return {
+    question: userInput,
+    botReply: responses[Math.floor(Math.random() * responses.length)]
+    };
+  };
 
   return (
     <div>
-      <span  onClick={handleNewSearch}>
-        New Search Icon
-      </span>
+        <AddIcon onClick={handleNewSearch}></AddIcon>
       <div>
         <h1>How can I help you today?</h1>
       </div>
@@ -95,7 +112,10 @@ const App = (props) => {
           <>
             <Display key={input.id} response={input.question} />
             <ul>
-              <Answer key={input.userId} response={input.botReply} />
+              <Answer key={input.userId} response={input.botReply} variousBotResponses={variousBotResponses} setResponse={setResponse}  />
+              {/* <ThumbDownIcon onClick={handleThumbDownClick} style={{ color: thumbDownClicked ? 'red' : 'inherit' }} /> */}
+              <CopyAllIcon onClick={() => handleCopyAllClick(input.botReply)} />
+              <ReplayIcon onClick={handleReplayClick} />
             </ul>
           </>
         ))}
@@ -124,4 +144,5 @@ const App = (props) => {
     </div>
   );
 };
+
 export default App;
