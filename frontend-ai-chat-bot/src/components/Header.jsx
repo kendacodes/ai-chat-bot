@@ -8,7 +8,7 @@ const Header = ({ onClick }) => {
         {" "}
         <FaEdit />{" "}
       </p>
-      <span>Storm AI</span>{" "}
+      <span>STORM AI</span>{" "}
       <span>
         <FaPooStorm />{" "}
       </span>
