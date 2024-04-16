@@ -2,10 +2,14 @@ import { useState } from "react";
 import Button from "./components/Button";
 import Display from "./components/Display";
 import Answer from "./components/Answer";
+import Header from "./components/Header"
+import Greetings from "./components/Greetings";
 import AddIcon from '@mui/icons-material/Add';
 // import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import CopyAllIcon from '@mui/icons-material/CopyAll';
 import ReplayIcon from '@mui/icons-material/Replay';
+import { Stack, Box, AppBar, TextField, CircularProgress} from "@mui/material";
+
 
 const App = (props) => {
 
@@ -15,6 +19,7 @@ const App = (props) => {
   const [suggestedQuestion, setSuggestedQuestion] = useState("");
   const [history, setHistory] = useState([]);
   const [showSuggested, setShowSuggested] = useState(true)
+  const [waiting, setWaiting] = useState(false)
   // const [thumbDownClicked, setThumbDownClicked] = useState(false);
 
   const variousBotResponses = [
@@ -34,6 +39,7 @@ const App = (props) => {
   // On a form submit, we select a random response from the variousBotResponses array 
   // Use a newResponse object with the user's input and a randomly selected bot reply, update the response state array with this new response, and clear the userInput state.
   const handleFormSubmit = (event) => {
+    setWaiting(true)
     event.preventDefault();
     if (userInput < 1) {
       alert("Input required");
@@ -50,6 +56,8 @@ const App = (props) => {
       setResponse([...response, newResponse]);
       setUserInput("");
       setResponse(response.concat(newResponse));
+      setShowSuggested(false)
+      setWaiting(false)
     }, 3000);
   };
 
@@ -102,11 +110,34 @@ const App = (props) => {
   };
 
   return (
-    <div>
-        <AddIcon onClick={handleNewSearch}></AddIcon>
+    <>
+    <AppBar
+        sx={{
+          backgroundColor: "#242424",
+          fontWeight: 700,
+          height: "5rem",
+          padding: "1rem",
+          position: "static",
+          minWidth: "100px",
+        }}
+      >
+      <Header onClick={handleNewSearch}/>
+      </AppBar>
+      
+    <Stack direction="column" spacing={2} sx={{display: "flex", "align-items": "center"}}>
+    
       <div>
-        <h1>How can I help you today?</h1>
       </div>
+      <Box sx={{
+        margin: "0 1rem", mb: 2,
+        display: "flex",
+        flexDirection: "column",
+        height: 300,
+        overflow: "hidden",
+      }}>
+       {showSuggested && <Greetings/>}
+
+{ waiting ? <CircularProgress sx={{color: "LightGray", margin: "0 1rem"}}/> : (
       <ul>
         {response.map((input) => (
           <>
@@ -120,6 +151,8 @@ const App = (props) => {
           </>
         ))}
       </ul>
+      )}
+      </Box>
       <div className="search-container">
         <div className="btn-container">
           {showSuggested && props.suggestions.map((suggested) => (
@@ -136,12 +169,21 @@ const App = (props) => {
         </div>
         <div>
           <form onSubmit={handleFormSubmit}>
-            <input value={userInput} onChange={handleUserInput} />
+            <input value={userInput} onChange={handleUserInput}  placeholder="Ask StormAI anything!"/>
+            {/* <TextField
+          id="filled-textarea"
+          // label="Multiline Placeholder"
+          value={userInput} onChange={handleUserInput} 
+          placeholder="Ask StormAI anything!"
+          variant="filled"
+          multiline
+        /> */}
             <Button text="submit" type="submit" />
           </form>
         </div>
       </div>
-    </div>
+    </Stack>
+    </>
   );
 };
 
