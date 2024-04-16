@@ -40,13 +40,13 @@ cd ai-chat-bot
 
 ## How to Use
 
-Using STORM AI 🌩️ is as easy as pie! Once you've opened the application in your web browser, type your message into the chat box and press enter. ChatGPT Mock Bot will then delight you with its response (or lack thereof).
+Using STORM AI 🌩️ is as easy as pie! Once you've opened the application in your web browser, type your message into the chat box and press enter. STORM AI will then delight you with its response (or lack thereof).
 
 ## Feedback
 
-We value your feedback immensely! If you have any suggestions, ideas for improvement, or just want to share your experience with ChatGPT Mock Bot, feel free to reach out to us. Your input helps us make ChatGPT Mock Bot even more delightful for future versions!
+We value your feedback immensely! If you have any suggestions, ideas for improvement, or just want to share your experience using STORM AI, feel free to reach out to us. Your input helps us make STORM AI even more delightful for future versions!
 
 ## Thank You!
 
-Thank you for choosing STORM AI 🌩️ - Version 1! We hope you enjoy your time conversing with our charming little bot. Stay tuned for future updates and enhancements. Until then, happy chatting! 🎉✨
+Thank you for choosing STORM AI 🌩️ - Version 1! We hope you enjoy your time chatting with our charming little bot. Stay tuned for future updates and enhancements. Until then, happy chatting! 🎉✨
 
