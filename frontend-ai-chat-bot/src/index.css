@@ -56,6 +56,51 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.form-container{ display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* justify-content: center;  */
+  align-items: center; 
+  margin-top: 12px;
+}
+  .form{
+  display: flex;
+  /* flex-direction: row;
+  /* width: 100%; */ 
+  align-items: center;
+  /* flex: 1 1 0%; */ 
+  justify-content: center;
+  }
+  .textArea{
+  text-align: left;
+  padding: 0.875rem 3rem 0.875rem 1rem;
+  width: 848px;
+  border: 0.50x solid rgb (227, 227, 227);
+  background: transparent; 
+  border-radius: 19px;
+  height: 52px;
+  box-sizing: border-box;
+  resize: none; 
+  margin-right: 8px;
+  }
+  .btn-container{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: wrap;
+    text-align: center;
+
+    }
+    .btn-container > .btn{
+    width: 49%;
+    height: 64px;
+    border-radius: 19px;
+    }
+    .outer-ul{
+      font-size: 1.4rem
+      }
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
